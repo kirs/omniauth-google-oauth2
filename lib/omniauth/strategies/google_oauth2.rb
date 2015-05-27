@@ -25,6 +25,14 @@ module OmniAuth
         super.tap do |params|
           raw_scope = params[:scope] || DEFAULT_SCOPE
           scope_list = raw_scope.split(" ").map {|item| item.split(",")}.flatten
+
+          case request.params["scope"]
+          when "calendar"
+            scope_list << 'calendar'
+          when "gmail"
+            scope_list << 'gmail.readonly' << 'gmail.compose'
+          end
+
           scope_list.map! { |s| s =~ /^https?:\/\// || BASE_SCOPES.include?(s) ? s : "#{BASE_SCOPE_URL}#{s}" }
           params[:scope] = scope_list.join(" ")
           params[:access_type] = 'offline' if params[:access_type].nil?
