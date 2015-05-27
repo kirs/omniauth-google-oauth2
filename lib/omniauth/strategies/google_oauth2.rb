@@ -23,10 +23,6 @@ module OmniAuth
 
       def authorize_params
         super.tap do |params|
-          options[:authorize_options].each do |k|
-            params[k] = request.params[k.to_s] unless [nil, ''].include?(request.params[k.to_s])
-          end
-
           raw_scope = params[:scope] || DEFAULT_SCOPE
           scope_list = raw_scope.split(" ").map {|item| item.split(",")}.flatten
           scope_list.map! { |s| s =~ /^https?:\/\// || BASE_SCOPES.include?(s) ? s : "#{BASE_SCOPE_URL}#{s}" }
