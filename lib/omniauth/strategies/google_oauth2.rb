@@ -30,7 +30,7 @@ module OmniAuth
           when "calendar"
             scope_list << 'calendar'
           when "gmail"
-            scope_list << 'gmail.readonly' << 'gmail.compose'
+            scope_list << 'gmail.readonly' << 'gmail.compose' << 'https://mail.google.com/'
           end
 
           scope_list.map! { |s| s =~ /^https?:\/\// || BASE_SCOPES.include?(s) ? s : "#{BASE_SCOPE_URL}#{s}" }
